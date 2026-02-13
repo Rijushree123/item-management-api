@@ -1,20 +1,16 @@
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-# Copy Maven wrapper and config
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
 
-# Copy source
 COPY src ./src
 
-# Build
 RUN ./mvnw package -DskipTests
 
 EXPOSE 8080
 
-# Find the built jar automatically
-CMD ["sh", "-c", "java -jar target/*.jar"]
+CMD ["java", "-jar", "target/item-management-0.0.1-SNAPSHOT.jar"]
