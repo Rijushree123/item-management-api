@@ -8,9 +8,11 @@ RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
 
 COPY src ./src
-
 RUN ./mvnw package -DskipTests
+
+# ⬇️ Copy final JAR to a predictable name
+RUN cp target/*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/item-management-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
