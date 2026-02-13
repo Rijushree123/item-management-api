@@ -3,6 +3,7 @@ package com.manage.item.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,8 @@ public class ItemController {
 
 	@PostMapping
 	public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
-		return ResponseEntity.ok(itemService.addITem(item));
+		Item created = itemService.addITem(item);
+		return ResponseEntity.status(HttpStatus.CREATED).body(created);
 	}
 
 	@GetMapping
