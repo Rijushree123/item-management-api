@@ -1,5 +1,8 @@
 package com.manage.item.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,18 @@ public class ItemController {
 	@PostMapping
 	public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
 		return ResponseEntity.ok(itemService.addITem(item));
+	}
+
+	@GetMapping
+	public ResponseEntity<?> getAllItems() {
+		List<Item> items = itemService.getAllItems();
+		if(items.isEmpty()){
+			return ResponseEntity.ok(Map.of(
+				"message", "No items found. Please add some items.",
+				"items", items
+			));
+		}
+		return ResponseEntity.ok(items);
 	}
 
 	@GetMapping("/{id}")

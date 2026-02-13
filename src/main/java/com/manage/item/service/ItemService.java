@@ -18,7 +18,9 @@ public class ItemService {
 		items.add(item);
 		return item;
 	}
-
+	public List<Item> getAllItems() {
+		return items;
+	}
 	public Item getItemById(Integer id) {
 		return items.stream().filter(i -> i.getId().equals(id)).findFirst().orElse(null);
 	}
